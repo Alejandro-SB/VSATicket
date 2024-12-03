@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Features\Tickets\DeleteTicket\" />
     <Folder Include="Application\Features\Tickets\GetAllTickets\" />
     <Folder Include="Application\Features\Tickets\GetTicketsByUser\" />
     <Folder Include="Application\Features\Tickets\GetTicketsByStatus\" />
