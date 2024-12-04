@@ -27,7 +27,6 @@
     <Folder Include="Application\Features\Tickets\GetTicketsByUser\" />
     <Folder Include="Application\Features\Tickets\GetTicketsByStatus\" />
     <Folder Include="Application\Features\Tickets\ResolveTicket\" />
-    <Folder Include="Application\Features\Tickets\ChangeTicketStatus\" />
     <Folder Include="Domain\Interfaces\" />
     <Folder Include="Infrastructure\Mappers\" />
     <Folder Include="Infrastructure\Repositories\" />

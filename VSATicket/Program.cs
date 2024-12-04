@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using VSATicket.Application.Features.Tickets.ChangeTicketStatus;
 using VSATicket.Application.Features.Tickets.CreateTicket;
 using VSATicket.Application.Features.Tickets.DeleteTicket;
 using VSATicket.Application.Features.Tickets.GetTicket;
@@ -19,6 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<GetTicketHandler>();
 builder.Services.AddScoped<CreateTicketHandler>();
 builder.Services.AddScoped<DeleteTicketHandler>();
+builder.Services.AddScoped<ChangeTicketStatusHandler>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
