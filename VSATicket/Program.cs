@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using VSATicket.Application.Features.Tickets.CreateTicket;
+using VSATicket.Application.Features.Tickets.DeleteTicket;
 using VSATicket.Application.Features.Tickets.GetTicket;
 using VSATicket.Infrastructure.Data;
 
@@ -17,6 +18,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 builder.Services.AddScoped<GetTicketHandler>();
 builder.Services.AddScoped<CreateTicketHandler>();
+builder.Services.AddScoped<DeleteTicketHandler>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
