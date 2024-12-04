@@ -26,9 +26,7 @@
     <Folder Include="Application\Features\Tickets\GetAllTickets\" />
     <Folder Include="Application\Features\Tickets\GetTicketsByUser\" />
     <Folder Include="Application\Features\Tickets\GetTicketsByStatus\" />
-    <Folder Include="Domain\Interfaces\" />
     <Folder Include="Infrastructure\Mappers\" />
-    <Folder Include="Infrastructure\Repositories\" />
   </ItemGroup>
 
 </Project>

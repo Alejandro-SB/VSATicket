@@ -1,15 +1,15 @@
-﻿using VSATicket.Infrastructure.Data;
-using VSATicket.Domain.Common.Models;
+﻿using VSATicket.Domain.Common.Models;
+using VSATicket.Application.Interfaces;
 
 namespace VSATicket.Application.Features.Tickets.CreateTicket
 {
     public class CreateTicketHandler
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly ITicketRepository _ticketRepository;
 
-        public CreateTicketHandler(ApplicationDbContext dbContext)
+        public CreateTicketHandler(ITicketRepository ticketRepository)
         {
-            _dbContext = dbContext;
+            _ticketRepository = ticketRepository;
         }
 
         public async Task HandleAsync(CreateTicketCommand command)
@@ -23,8 +23,7 @@ namespace VSATicket.Application.Features.Tickets.CreateTicket
                 CreatedAt = DateTime.UtcNow
             };
 
-            _dbContext.Tickets.Add(ticket);
-            await _dbContext.SaveChangesAsync();
+            await _ticketRepository.CreateTicketAsync(ticket);
         }
     }
 }

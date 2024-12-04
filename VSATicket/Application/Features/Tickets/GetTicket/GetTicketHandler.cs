@@ -1,22 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
-using VSATicket.Infrastructure.Data;
+﻿using VSATicket.Application.Interfaces;
 
 namespace VSATicket.Application.Features.Tickets.GetTicket
 {
     public class GetTicketHandler
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly ITicketRepository _ticketRepository;
 
-        public GetTicketHandler(ApplicationDbContext dbContext)
+        public GetTicketHandler(ITicketRepository ticketRepository)
         {
-            _dbContext = dbContext;
+            _ticketRepository = ticketRepository;
         }
 
         public async Task<TicketDto?> HandleAsync(GetTicketQuery query)
         {
-            var ticket = await _dbContext.Tickets
-                .AsNoTracking()
-                .FirstOrDefaultAsync(t => t.Id == query.TicketId);
+            var ticket = await _ticketRepository.GetByIdAsync(query.TicketId);
 
             if (ticket == null)
                 return null;
