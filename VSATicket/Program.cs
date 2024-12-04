@@ -3,6 +3,7 @@ using VSATicket.Application.Features.Tickets.ChangeTicketStatus;
 using VSATicket.Application.Features.Tickets.CreateTicket;
 using VSATicket.Application.Features.Tickets.DeleteTicket;
 using VSATicket.Application.Features.Tickets.GetTicket;
+using VSATicket.Application.Features.Tickets.ResolveTicket;
 using VSATicket.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,7 @@ builder.Services.AddScoped<GetTicketHandler>();
 builder.Services.AddScoped<CreateTicketHandler>();
 builder.Services.AddScoped<DeleteTicketHandler>();
 builder.Services.AddScoped<ChangeTicketStatusHandler>();
+builder.Services.AddScoped<ResolveTicketHandler>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
