@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VSATicket.Application.Features.Tickets.ResolveTicket;
 
 namespace VSATicket.Application.Features.Tickets.ResolveTicket
@@ -14,6 +15,7 @@ namespace VSATicket.Application.Features.Tickets.ResolveTicket
             _handler = handler;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPatch("{id}/resolve")]
         public async Task<IActionResult> ResolveTicket(int id, [FromBody] ResolveTicketCommand command)
         {

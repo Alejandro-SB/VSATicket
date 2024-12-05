@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VSATicket.Application.Features.Tickets.GetTicket;
 
 namespace VSATicket.Application.Features.Tickets.GetTicket
@@ -14,6 +15,7 @@ namespace VSATicket.Application.Features.Tickets.GetTicket
             _handler = handler;
         }
 
+        [Authorize(Roles = "user,admin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTicketById(int id)
         {

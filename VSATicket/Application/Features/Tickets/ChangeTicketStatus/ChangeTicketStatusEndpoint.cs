@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VSATicket.Application.Features.Tickets.ChangeTicketStatus;
 
 namespace VSATicket.Application.Features.Tickets.ChangeTicketStatus
@@ -14,6 +15,7 @@ namespace VSATicket.Application.Features.Tickets.ChangeTicketStatus
             _handler = handler;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPatch("{id}/status")]
         public async Task<IActionResult> ChangeTicketStatus(int id, [FromBody] string status)
         {
