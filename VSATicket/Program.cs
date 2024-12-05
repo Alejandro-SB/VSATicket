@@ -4,7 +4,9 @@ using VSATicket.Application.Features.Tickets.CreateTicket;
 using VSATicket.Application.Features.Tickets.DeleteTicket;
 using VSATicket.Application.Features.Tickets.GetTicket;
 using VSATicket.Application.Features.Tickets.ResolveTicket;
+using VSATicket.Application.Interfaces;
 using VSATicket.Infrastructure.Data;
+using VSATicket.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 builder.Services.AddScoped<GetTicketHandler>();
 builder.Services.AddScoped<CreateTicketHandler>();
 builder.Services.AddScoped<DeleteTicketHandler>();
