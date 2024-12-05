@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VSATicket.Application.Features.Tickets.CreateTicket;
 
 namespace VSATicket.Application.Features.Tickets.CreateTicket
@@ -14,13 +15,13 @@ namespace VSATicket.Application.Features.Tickets.CreateTicket
             _handler = handler;
         }
 
+        [Authorize(Roles = "user")]
         [HttpPost]
         public async Task<IActionResult> CreateTicket([FromBody] CreateTicketCommand command)
         {
             await _handler.HandleAsync(command);
 
-            
-            return CreatedAtAction("GetTicketById", "GetTicketEndpoints", new { id = command.Title }, command); 
+            return CreatedAtAction("GetTicketById", "GetTicketEndpoints", new { id = command.Title }, command);
         }
     }
 }

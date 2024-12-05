@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace VSATicket.Application.Features.Tickets.DeleteTicket
 {
@@ -14,6 +14,7 @@ namespace VSATicket.Application.Features.Tickets.DeleteTicket
             _handler = handler;
         }
 
+        [Authorize(Roles = "user")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTicket(int id)
         {
