@@ -42,5 +42,13 @@ namespace VSATicket.Infrastructure.Repositories
             _dbContext.Tickets.Update(ticket);
             await _dbContext.SaveChangesAsync();
         }
+        public async Task<IEnumerable<Ticket>> GetTicketsByStatusAsync(string status) 
+        { 
+            return await _dbContext.Tickets.Where(t => t.Status == status).ToListAsync();
+        }
+        public async Task<IEnumerable<Ticket>> GetTicketsByCreatorAsync(string createdBy) 
+        { 
+            return await _dbContext.Tickets.Where(t => t.CreatedBy == createdBy).ToListAsync();
+        }
     }
 }

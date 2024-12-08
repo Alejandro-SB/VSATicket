@@ -9,5 +9,7 @@ namespace VSATicket.Application.Interfaces
         Task ChangeTicketStatusAsync(Ticket ticket);
         Task DeleteTicketAsync(Ticket ticket);
         Task ResolveTicketAsync(Ticket ticket);
+        Task<IEnumerable<Ticket>> GetTicketsByStatusAsync(string status);
+        Task<IEnumerable<Ticket>> GetTicketsByCreatorAsync(string createdBy);
     }
 }
