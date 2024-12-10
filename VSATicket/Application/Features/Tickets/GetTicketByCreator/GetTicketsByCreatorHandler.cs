@@ -1,35 +1,29 @@
-﻿using VSATicket.Application.Interfaces;
-using VSATicket.Domain.Common.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using VSATicket.Infrastructure.Data;
 
 namespace VSATicket.Application.Features.Tickets.GetTicketsByCreator
 {
     public class GetTicketsByCreatorHandler
     {
-        private readonly ITicketRepository _ticketRepository;
+        private readonly ApplicationDbContext _context;
 
-        public GetTicketsByCreatorHandler(ITicketRepository ticketRepository)
+        public GetTicketsByCreatorHandler(ApplicationDbContext ticketRepository)
         {
-            _ticketRepository = ticketRepository;
+            _context = ticketRepository;
         }
 
         public async Task<IEnumerable<GetTicketByCreatorDto>> HandleAsync(GetTicketsByCreatorQuery query)
         {
-            var tickets = await _ticketRepository.GetTicketsByCreatorAsync(query.CreatedBy);
-            return tickets.Select(MapToDto).ToList();
-        }
+            var tickets = await _context.Tickets.FilterByCreator(query.CreatedBy)
+                .Select(ticket => new GetTicketByCreatorDto
+                {
+                    Id = ticket.Id,
+                    Title = ticket.Title,
+                    Description = ticket.Description,
+                    CreatedBy = ticket.CreatedBy
+                }).ToListAsync();
 
-        private GetTicketByCreatorDto MapToDto(Ticket ticket)
-        {
-            return new GetTicketByCreatorDto
-            {
-                Id = ticket.Id,
-                Title = ticket.Title,
-                Description = ticket.Description,
-                CreatedBy = ticket.CreatedBy
-            };
+            return tickets;
         }
     }
 }

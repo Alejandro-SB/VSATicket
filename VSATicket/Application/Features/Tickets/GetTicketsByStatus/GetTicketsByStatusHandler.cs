@@ -1,34 +1,38 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using VSATicket.Application.Interfaces;
-using VSATicket.Domain.Common.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using VSATicket.Infrastructure.Data;
 
 namespace VSATicket.Application.Features.Tickets.GetTicketsByStatus
 {
     public class GetTicketsByStatusHandler
     {
-        private readonly ITicketRepository _ticketRepository;
+        private readonly ApplicationDbContext _context;
 
-        public GetTicketsByStatusHandler(ITicketRepository ticketRepository)
+        public GetTicketsByStatusHandler(ApplicationDbContext ticketRepository)
         {
-            _ticketRepository = ticketRepository;
+            _context = ticketRepository;
         }
 
         public async Task<IEnumerable<GetTicketByStatusDto>> HandleAsync(GetTicketByStatusQuery query)
         {
-            var tickets = await _ticketRepository.GetTicketsByStatusAsync(query.Status);
-            return tickets.Select(MapToDto).ToList();
+            var tickets = await _context.Tickets.FilterByStatus(query.Status)
+                .Select(ticket => new GetTicketByStatusDto
+                {
+                    Id = ticket.Id,
+                    Title = ticket.Title,
+                    Status = ticket.Status
+                })
+                .ToListAsync();
+
+            return tickets;
         }
 
-        private GetTicketByStatusDto MapToDto(Ticket ticket)
-        {
-            return new GetTicketByStatusDto
-            {
-                Id = ticket.Id,
-                Title = ticket.Title,
-                Status = ticket.Status
-            };
-        }
+        // If you don't like the inline in the select, you can do this
+        //private Expression<Func<Ticket, GetTicketByStatusDto>> MapToDto = (ticket) =>
+        //    new()
+        //    {
+        //        Id = ticket.Id,
+        //        Title = ticket.Title,
+        //        Status = ticket.Status
+        //    };
     }
 }

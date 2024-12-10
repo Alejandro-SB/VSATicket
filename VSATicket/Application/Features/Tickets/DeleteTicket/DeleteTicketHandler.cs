@@ -1,25 +1,25 @@
-﻿using VSATicket.Domain.Common.Models;
-using VSATicket.Application.Interfaces;
+﻿using VSATicket.Infrastructure.Data;
 
 namespace VSATicket.Application.Features.Tickets.DeleteTicket
 {
     public class DeleteTicketHandler
     {
-        private readonly ITicketRepository _ticketRepository;
+        private readonly ApplicationDbContext _context;
 
-        public DeleteTicketHandler(ITicketRepository ticketRepository)
+        public DeleteTicketHandler(ApplicationDbContext ticketRepository)
         {
-            _ticketRepository = ticketRepository;
+            _context = ticketRepository;
         }
 
         public async Task<bool> HandleAsync(DeleteTicketCommand command)
         {
-            var ticket = await _ticketRepository.GetByIdAsync(command.Id);
+            var ticket = await _context.Tickets.GetById(command.Id);
 
             if (ticket == null)
                 return false;
 
-            await _ticketRepository.DeleteTicketAsync(ticket);
+            _context.Remove(ticket);
+            await _context.SaveChangesAsync();
             return true;
         }
     }

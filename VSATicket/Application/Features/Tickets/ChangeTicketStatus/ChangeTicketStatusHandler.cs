@@ -1,26 +1,28 @@
-﻿using VSATicket.Domain.Common.Models;
-using VSATicket.Application.Interfaces;
+﻿using VSATicket.Infrastructure.Data;
 
 namespace VSATicket.Application.Features.Tickets.ChangeTicketStatus
 {
     public class ChangeTicketStatusHandler
     {
-        private readonly ITicketRepository _ticketRepository;
+        private readonly ApplicationDbContext _context;
 
-        public ChangeTicketStatusHandler(ITicketRepository ticketRepository)
+        public ChangeTicketStatusHandler(ApplicationDbContext ticketRepository)
         {
-            _ticketRepository = ticketRepository;
+            _context = ticketRepository;
         }
 
         public async Task<bool> HandleAsync(ChangeTicketStatusCommand command)
         {
-            var ticket = await _ticketRepository.GetByIdAsync(command.Id);
+            var ticket = await _context.Tickets.GetById(command.Id);
 
             if (ticket == null)
                 return false;
 
             ticket.Status = command.Status;
-            await _ticketRepository.ChangeTicketStatusAsync(ticket);
+            // Change tracker is enabled, so you can just do this
+            await _context.SaveChangesAsync();
+
+            //await _context.ChangeTicketStatusAsync(ticket);
             return true;
         }
     }

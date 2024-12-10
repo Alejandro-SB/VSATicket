@@ -9,7 +9,6 @@ namespace VSATicket.Infrastructure.Configuration
         public static IServiceCollection AddRepositoriesConfiguration(this IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ITicketRepository, TicketRepository>();
 
             return services;
         }

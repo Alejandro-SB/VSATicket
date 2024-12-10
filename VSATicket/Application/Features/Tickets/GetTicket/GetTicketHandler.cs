@@ -1,19 +1,19 @@
-﻿using VSATicket.Application.Interfaces;
+﻿using VSATicket.Infrastructure.Data;
 
 namespace VSATicket.Application.Features.Tickets.GetTicket
 {
     public class GetTicketHandler
     {
-        private readonly ITicketRepository _ticketRepository;
+        private readonly ApplicationDbContext _context;
 
-        public GetTicketHandler(ITicketRepository ticketRepository)
+        public GetTicketHandler(ApplicationDbContext ticketRepository)
         {
-            _ticketRepository = ticketRepository;
+            _context = ticketRepository;
         }
 
         public async Task<TicketDto?> HandleAsync(GetTicketQuery query)
         {
-            var ticket = await _ticketRepository.GetByIdAsync(query.TicketId);
+            var ticket = await _context.Tickets.GetById(query.TicketId);
 
             if (ticket == null)
                 return null;
